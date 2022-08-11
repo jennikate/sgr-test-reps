@@ -10,7 +10,7 @@ import App from './App';
 
 const root = createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <GuildProvider>
       <BrowserRouter>
         <Routes>
@@ -18,5 +18,5 @@ root.render(
         </Routes>
       </BrowserRouter>
     </GuildProvider>
-  </React.StrictMode>,
+  // </React.StrictMode>,
 );
