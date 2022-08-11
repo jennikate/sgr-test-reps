@@ -1,6 +1,11 @@
+import GuildList from './Pages/GuildList';
+
 const App = () => {
   return (
-    <h1>Basic setup</h1>
+    <>
+      <h1>Basic setup</h1>
+      <GuildList />
+    </>
   );
 };
 
