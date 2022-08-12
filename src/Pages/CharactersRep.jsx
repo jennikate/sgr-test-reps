@@ -29,7 +29,7 @@ const CharacterReputation = () => {
     try {
       const repList = await axios.get(`${BLIZZ_API_URL}/profile/wow/character/${realm}/${lowercaseCharacterName}/reputations?${BLIZZ_CONFIG}`);
       const specificRep = repList.data.reputations.filter((reputation) => {
-        return reputation.faction.name === 'Argent Crusade'; 
+        return reputation.faction.name === 'Argent Crusade';
       });
       return {
         character: repList.data.character,
@@ -62,7 +62,7 @@ const CharacterReputation = () => {
 
   return (
     <main className="main">
-      <h1>Rep</h1>
+      <h1>Choose your reputation</h1>
       <button
         type='button'
         onClick={(e) => {
@@ -73,16 +73,17 @@ const CharacterReputation = () => {
         Go
       </button>
       <hr />
-      <h2>Reps for {requestedRep}</h2>
+      {characterReps && <h2>Reps for {requestedRep}</h2>}
       {characterReps && characterReps.map((character) => {
         const repInfo = character.specificRep[0].standing;
-        const repPercent = repInfo.value > 0 ? parseInt((repInfo.value / repInfo.max) * 100) : 0;
+        const repValue = repInfo.max === 0 ? 100 : repInfo.value;
+        const repMax = repInfo.max === 0 ? 100 : repInfo.max;
+        const repPercent = parseInt((repValue / repMax) * 100);
         return (
-          <div key={character.character.id}>
-            <p>{character.character.name}: {repInfo.name}</p>
-            <label htmlFor="rep">Rep progress:</label>
-            <progress id="rep" max={repInfo.max} value={repInfo.value}>{repPercent}</progress>
-            <p>Max: {repInfo.max}, Value: {repInfo.value}, Raw: {repInfo.raw}</p>
+          <div className="block block--reputation" key={character.character.id}>
+            <p className="body block__title">{character.character.name}</p>
+            <p className="body body--small">{repInfo.name}</p>
+            <progress className={repInfo.name.toLowerCase()} id="rep" max={repMax} value={repValue}>{repPercent}</progress>
           </div>
 
         );

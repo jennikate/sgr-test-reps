@@ -1,11 +1,29 @@
 @use './reset.scss';
 
+$font-color: #CCCCCC;
+$base-color: rgba(24,15,2,1); //hex 180f02
+$alliance-color: blue;
+$horde-color:red;
+$highlight-color: #453e35;
+
+$--rep-color--hated: linear-gradient(90deg,#8e0902 0,#d90e03);
+$--rep-color--hostile: linear-gradient(90deg,#881604 0,#d90e03);
+$--rep-color--unfriendly: linear-gradient(90deg,#832306 0,#d32206);
+$--rep-color--neutral: linear-gradient(90deg,#a17f02 0,#edba03);
+$--rep-color--friendly: linear-gradient(90deg,#074a00 0,#0f9601);
+$--rep-color--honored: linear-gradient(90deg,#0d541c 0,#179b2e);
+$--rep-color--revered: linear-gradient(90deg,#135e39 0,#20a15a);
+$--rep-color--exalted: linear-gradient(90deg,#196855 0,#28a687);
+
 /* ==================
    LAYOUT
 ================== */
 
 body {
-  background-color: pink;
+  background: rgb(7,5,29);
+  background: radial-gradient(circle, rgba(7,5,29,1) 24%, $base-color 100%); //second color is the blue, can change for horde, alliance etc in future.
+  font-family: 'Roboto', sans-serif;
+  color: $font-color;
 }
 
 header {
@@ -15,7 +33,6 @@ header {
 main {
   max-width: 1280px;
   margin: 0 auto;
-  background-color: red;
 }
 
 .flex-wrapper {
@@ -23,8 +40,88 @@ main {
   flex-flow: row wrap;
 }
 
+
+
+/* ==================
+   ELEMENTS
+================== */
+
 progress {
-  box-sizing: border-box;
-  display: inline-block;
   all: revert;
+  box-sizing: border-box;
+  height: 20px;
+  border-radius: 1px;
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: rgb(240, 240, 240);
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(240, 240, 240, 0.25) inset;
+}
+
+progress[value]::-webkit-progress-value {
+  // background-image: -webkit-linear-gradient(left, rgb(73, 81, 73), rgb(29, 192, 32));
+  border-radius: 2px;
+}
+
+progress.hated[value]::-webkit-progress-value {
+  background: $--rep-color--hated;
+}
+progress.hostile[value]::-webkit-progress-value {
+  background: $--rep-color--hostile;
+}
+progress.unfriendly[value]::-webkit-progress-value {
+  background: $--rep-color--unfriendly;
+}
+progress.neutral[value]::-webkit-progress-value {
+  background: $--rep-color--neutral;
+}
+progress.friendly[value]::-webkit-progress-value {
+  background: $--rep-color--friendly;
+}
+progress.honored[value]::-webkit-progress-value {
+  background: $--rep-color--honored;
+}
+progress.revered[value]::-webkit-progress-value {
+  background: $--rep-color--revered;
+}
+progress.exalted[value]::-webkit-progress-value {
+  background: $--rep-color--exalted;
+}
+
+hr {
+  border: 1px solid $highlight-color;
+  margin: 20px 0;
+}
+
+.block {
+  margin: 30px;
+}
+.block__title {
+  margin-bottom: 10px;
+  font-weight : 400;
+  font-size: 1.5rem;
+  margin-bottom:0.5rem;
+}
+
+
+
+
+/* ==================
+   TEXT
+================== */
+
+h1, h2, h3, h4, h5 {
+  font-weight: 700;
+}
+h1 {
+  font-size: 2rem;
+}
+.body--medium {
+  font-weight : 400;
+  font-size: 1.5rem;
+}
+.body--small {
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
 }
