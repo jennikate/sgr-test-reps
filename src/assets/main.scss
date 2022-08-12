@@ -1,0 +1,24 @@
+@use './reset.scss';
+
+/* ==================
+   LAYOUT
+================== */
+
+body {
+  background-color: pink;
+}
+
+header {
+  background-color: blue;
+}
+
+main {
+  max-width: 1280px;
+  margin: 0 auto;
+  background-color: red;
+}
+
+.flex-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+}
