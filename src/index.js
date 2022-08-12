@@ -12,14 +12,22 @@ import GuildList from './Pages/GuildList';
 const root = createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
+  <>
     <GuildProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/sunnyglade-ratters" element={<GuildList />} />
-          <Route path="/reputation" element={<CharacterReputation />} />
-        </Routes>
-      </BrowserRouter>
-    </GuildProvider>,
+      <header className="header">
+        I am the header
+      </header>
+      <main className="main">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/sunnyglade-ratters" element={<GuildList />} />
+            <Route path="/reputation" element={<CharacterReputation />} />
+          </Routes>
+        </BrowserRouter>
+      </main>
+    </GuildProvider>
+  </>,
+
   // </React.StrictMode>,
 );

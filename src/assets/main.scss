@@ -22,3 +22,9 @@ main {
   display: flex;
   flex-flow: row wrap;
 }
+
+progress {
+  box-sizing: border-box;
+  display: inline-block;
+  all: revert;
+}

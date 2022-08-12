@@ -15,7 +15,11 @@ const CharacterReputation = () => {
     },
     {
       realm: 'argent-dawn',
-      name: 'kayhlea',
+      name: 'hood',
+    },
+    {
+      realm: 'argent-dawn',
+      name: 'rhaewon',
     },
   ];
   const [characterReps, setCharacterReps] = useState();
@@ -52,8 +56,12 @@ const CharacterReputation = () => {
   // map to get reps
   // display just wanted rep
 
+  // raw total rep score (regardless of tier -- I think is always 42000 total for normal reps)
+  // value current rep score for tier
+  // max total rep needed for tier
+
   return (
-    <>
+    <main className="main">
       <h1>Rep</h1>
       <button
         type='button'
@@ -67,15 +75,19 @@ const CharacterReputation = () => {
       <hr />
       <h2>Reps for {requestedRep}</h2>
       {characterReps && characterReps.map((character) => {
+        const repInfo = character.specificRep[0].standing;
+        const repPercent = repInfo.value > 0 ? parseInt((repInfo.value / repInfo.max) * 100) : 0;
         return (
           <div key={character.character.id}>
-            <p>{character.character.name}</p>
-            <p>{character.specificRep[0].standing.name}</p>
+            <p>{character.character.name}: {repInfo.name}</p>
+            <label htmlFor="rep">Rep progress:</label>
+            <progress id="rep" max={repInfo.max} value={repInfo.value}>{repPercent}</progress>
+            <p>Max: {repInfo.max}, Value: {repInfo.value}, Raw: {repInfo.raw}</p>
           </div>
 
         );
       })}
-    </>
+    </main>
   );
 };
 
