@@ -46,6 +46,10 @@ main {
    ELEMENTS
 ================== */
 
+input {
+  all: revert;
+}
+
 progress {
   all: revert;
   box-sizing: border-box;
