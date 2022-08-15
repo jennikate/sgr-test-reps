@@ -5,7 +5,7 @@ import InputField from '../Components/InputField';
 import { Validators } from '../Components/utils/Validator';
 
 const CharacterReputation = () => {
-  const [value, setValue] = useState('');
+  const [values, setValues] = useState({});
   const characterForm = [
     {
       type: 'input',
@@ -46,8 +46,7 @@ const CharacterReputation = () => {
   };
 
   const handleChange = (value) => {
-    console.log('fc', value);
-    setValue(value);
+    setValues(value);
   };
 
   /* handleChange
@@ -67,10 +66,24 @@ const CharacterReputation = () => {
       <div>
         <InputField
           type="text"
-          label="Testing label"
-          value={value}
+          label="Realm"
+          name="realm"
+          id="realm"
+          value={values.realm}
           validators={[
-            {check: Validators.required, message: 'This field is required'}
+            {check: Validators.required, message: 'This field is required'},
+          ]}
+          parentHandleChange={handleChange} 
+        />
+
+        <InputField
+          type="text"
+          label="Character name"
+          name="characterName"
+          id="characterName"
+          value={values.characterName}
+          validators={[
+            {check: Validators.required, message: 'This field is required'},
           ]}
           parentHandleChange={handleChange} 
         />

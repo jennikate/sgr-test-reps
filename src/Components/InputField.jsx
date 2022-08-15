@@ -2,21 +2,22 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { validateInput } from './utils/Validator';
 
-const InputField = ({ value, label, type, validators, parentHandleChange }) => {
+const InputField = ({ name, id, value, label, type, validators, parentHandleChange }) => {
   const [error, setError] = useState(false);
 
   const localHandleChange = (e) => {
-    const { value } = e.target;
     setError(validateInput(validators, value)); // run validation on change (to do on submit move this to parent)
-    parentHandleChange(value); // pass value back to the parent component
+    parentHandleChange({ name: e.target.name, value: e.target.value }); // pass value back to the parent component
   };
 
   return (
     <div>
-      {label && <label htmlFor="appInputField">{label}</label>}
+      {label && <label htmlFor={name}>{label}</label>}
       <input
+        name={name}
+        id={id}
         type={type}
-        value={value}
+        value={value.name}
         onChange={localHandleChange} // run the local function when input value changes
       />
       {error && <span>{error.message}</span>}
@@ -25,6 +26,8 @@ const InputField = ({ value, label, type, validators, parentHandleChange }) => {
 };
 
 InputField.propTypes = {
+  name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   value: PropTypes.string,
   label: PropTypes.string,
   type: PropTypes.string,
@@ -36,7 +39,7 @@ InputField.propTypes = {
 InputField.defaultProps = {
   value: '',
   label: '',
-  type: 'text', 
+  type: 'text',
   validators: [],
 };
 
