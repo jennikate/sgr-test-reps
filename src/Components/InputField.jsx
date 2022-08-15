@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { validateInput } from './utils/Validator';
+import { validateInput } from '../utils/Validator';
 
 const InputField = ({ name, id, value, label, type, validators, parentHandleChange }) => {
   const [error, setError] = useState(false);

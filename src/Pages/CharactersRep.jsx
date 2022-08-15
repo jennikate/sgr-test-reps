@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { BLIZZ_API_URL, BLIZZ_CONFIG } from '../Content/ApiConstants';
+import Button from '../Components/Button';
 import InputField from '../Components/InputField';
-import { Validators } from '../Components/utils/Validator';
+import { Validators } from '../utils/Validator';
 
 const CharacterReputation = () => {
   const [values, setValues] = useState({});
@@ -49,15 +50,10 @@ const CharacterReputation = () => {
     setValues(value);
   };
 
-  /* handleChange
-   * we pass the function down from here to the InputField component
-   * the InputField component also has a local handleChange function
-   * the localHandleChange is assigned to 'onChange' so when the input field changes
-   * it catches the event and stores the value
-   * Because we pass down the handleChange from this component as the onChange action
-   * when the field 'changes' and the localHandleChange runs, the value the localHandleChange
-   * returns is passed back up to this handleChange component
-  */
+  const handleClick = (e) => {
+    e.preventDefault();
+    console.log(values);
+  };
 
   return (
     <main className="main">
@@ -88,6 +84,10 @@ const CharacterReputation = () => {
           parentHandleChange={handleChange} 
         />
 
+        <Button
+          label="Go"
+          onClick={handleClick}
+        />
 
       </div>
       <hr />
