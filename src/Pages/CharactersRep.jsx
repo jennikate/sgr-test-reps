@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { BLIZZ_API_URL, BLIZZ_CONFIG } from '../Content/ApiConstants';
-import Button from '../Components/Button';
-import InputField from '../Components/InputField';
+import DisplayForm from '../Components/DisplayForm';
 import { Validators } from '../utils/Validator';
 
 const CharacterReputation = () => {
-  const [values, setValues] = useState({});
+  // const [values, setValues] = useState({});
   const characterForm = [
     {
       type: 'input',
@@ -46,50 +45,22 @@ const CharacterReputation = () => {
     setCharacterReps(resultArray);
   };
 
-  const handleChange = (value) => {
-    setValues(value);
-  };
-
-  const handleClick = (e) => {
+  const handleSubmit = (e, formData) => {
+    console.log('submit')
     e.preventDefault();
-    console.log(values);
+    console.log(formData);
   };
 
   return (
     <main className="main">
       <h1>Choose your reputation</h1>
       <p>Enter character(s)</p>
-      <div>
-        <InputField
-          type="text"
-          label="Realm"
-          name="realm"
-          id="realm"
-          value={values.realm}
-          validators={[
-            {check: Validators.required, message: 'This field is required'},
-          ]}
-          parentHandleChange={handleChange} 
-        />
-
-        <InputField
-          type="text"
-          label="Character name"
-          name="characterName"
-          id="characterName"
-          value={values.characterName}
-          validators={[
-            {check: Validators.required, message: 'This field is required'},
-          ]}
-          parentHandleChange={handleChange} 
-        />
-
-        <Button
-          label="Go"
-          onClick={handleClick}
-        />
-
-      </div>
+      <DisplayForm
+        autocomplete={'off'}
+        fields={characterForm}
+        handleSubmit={handleSubmit}
+      />
+      
       <hr />
       {characterReps && <h2>Reps for {requestedRep}</h2>}
       {characterReps && characterReps.map((character) => {
