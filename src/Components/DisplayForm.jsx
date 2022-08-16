@@ -13,26 +13,43 @@ const determineFieldType = ({ field, handleChange }) => {
 };
 
 const DisplayForm = ({ autocomplete, fields, handleSubmit }) => {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState();
 
-  // create formData structure, with any default values
-  const addExistingValues = (fields) => {
-    let formFields = {};
+  const addDefaultDataToFormData = (fields) => {
+    const defaultFormData = fields
+      .filter(field => field.defaultValue)
+      .map(field => {
+        return {
+          [field.fieldId]: {
+            fieldId: field.fieldId,
+            fieldGroupId: field.fieldGroupId,
+            fieldName: field.fieldName,
+            value: field.defaultValue,
+          },
+        };
+      });
 
-    fields.map((field) => {
-      formFields = { ...formFields, id: field.fieldGroupId, [field.fieldName]: field.defaultValue };
-    });
-    setFormData([formFields]);
+    // need to convert the above into an object, it's currently creating an array and we want an object
+    let finalObj = {};
+    for (let i = 0; i < defaultFormData.length; i++) {
+      Object.assign(finalObj, defaultFormData[i]);
+    }
+    
+    setFormData(finalObj);
   };
 
+
   const handleChange = (value) => {
-    console.log('v', value.id)
-    setFormData({ ...formData, id: value.fieldGroupId, [value.name]: value.value });
+    // collates all the fields data, which includes identifiers and values onChange
+    // handle submit will validate and transform the data for submission
+    // this is because different forms have different needs and we leave it to the
+    // page to determine what is to submit
+    setFormData({ ...formData, [value.fieldId]: { ...value } });
   };
 
   useEffect(() => {
     if (fields) {
-      addExistingValues(fields);
+      addDefaultDataToFormData(fields);
     }
   }, [fields, setFormData]);
 

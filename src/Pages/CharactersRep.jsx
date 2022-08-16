@@ -22,6 +22,21 @@ const CharacterReputation = () => {
       label: 'Realm (EU Only)',
       defaultValue: 'Argent Dawn',
     },
+    {
+      type: 'input',
+      fieldGroupId: '2',
+      fieldId: 'characterName-2',
+      fieldName: 'characterName',
+      label: 'Character name',
+    },
+    {
+      type: 'input',
+      fieldGroupId: '2',
+      fieldId: 'realm-2',
+      fieldName: 'realm',
+      label: 'Realm (EU Only)',
+      defaultValue: 'Argent Dawn',
+    },
   ];
   const requestedRep = 'Argent Crusade';
   const [characterReps, setCharacterReps] = useState();
@@ -51,7 +66,8 @@ const CharacterReputation = () => {
   };
 
   const validateFormData = (data) => {
-    console.log('d', data)
+    // validate character and realm are required
+    console.log(data)
     
   };
 

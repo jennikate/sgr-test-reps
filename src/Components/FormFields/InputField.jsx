@@ -3,11 +3,16 @@ import PropTypes from 'prop-types';
 const InputField = ({ error, field, handleChange }) => {
 
   const localHandleChange = (e) => {
-    handleChange({ id: e.target.dataset.groupid, name: e.target.name, value: e.target.value }); // pass value back to the parent component
+    handleChange({
+      fieldId: e.target.id,
+      fieldGroupId: e.target.dataset.groupid,
+      fieldName: e.target.name,
+      value: e.target.value,
+    }); // pass value back to the parent component along with field identifiers
   };
 
   return (
-    <div>
+    <>
       {field.label && <label htmlFor={field.fieldName}>{field.label}</label>}
       {error && <p>{error.message}</p>}
       <input
@@ -19,7 +24,7 @@ const InputField = ({ error, field, handleChange }) => {
         value={field.value}
         onChange={localHandleChange} // run the local function when input value changes
       />
-    </div>
+    </>
   );
 };
 
