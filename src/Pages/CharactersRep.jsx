@@ -10,14 +10,14 @@ const CharacterReputation = () => {
     {
       type: 'input',
       fieldGroupId: '1',
-      fieldId: 'characterName-1',
+      fieldId: 'characterName_1',
       fieldName: 'characterName',
       label: 'Character name',
     },
     {
       type: 'input',
       fieldGroupId: '1',
-      fieldId: 'realm-1',
+      fieldId: 'realm_1',
       fieldName: 'realm',
       label: 'Realm (EU Only)',
       defaultValue: 'Argent Dawn',
@@ -25,14 +25,14 @@ const CharacterReputation = () => {
     {
       type: 'input',
       fieldGroupId: '2',
-      fieldId: 'characterName-2',
+      fieldId: 'characterName_2',
       fieldName: 'characterName',
       label: 'Character name',
     },
     {
       type: 'input',
       fieldGroupId: '2',
-      fieldId: 'realm-2',
+      fieldId: 'realm_2',
       fieldName: 'realm',
       label: 'Realm (EU Only)',
       defaultValue: 'Argent Dawn',
@@ -60,6 +60,8 @@ const CharacterReputation = () => {
     }
   };
 
+  // BETTER HANDLE A 404 from the api call, right now code breaks
+
   const mapCharacterReps = async (characterList) => {
     const resultArray = await Promise.all(characterList.map(async (character) => getCharacterRep({ realm: character.realm, characterName: character.characterName })));
     setCharacterReps(resultArray);
@@ -67,14 +69,18 @@ const CharacterReputation = () => {
 
   const validateFormData = (data) => {
     // validate character and realm are required
-    console.log(data)
+    // console.log(data)
     
   };
 
   const handleSubmit = (e, formData) => {
     e.preventDefault();
-    validateFormData(formData);
-    // mapCharacterReps([formData]);
+    // how to programatically create the below array so there can be infinite (or up to 10 at least) characters submitted
+    const characterList = [
+      { realm: formData.realm_1.value, characterName: formData.characterName_1.value },
+      { realm: formData.realm_2.value, characterName: formData.characterName_2.value },
+    ];
+    mapCharacterReps(characterList);
   };
 
   return (
