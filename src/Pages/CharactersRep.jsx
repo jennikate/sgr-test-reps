@@ -2,20 +2,24 @@ import { useState } from 'react';
 import axios from 'axios';
 import { BLIZZ_API_URL, BLIZZ_CONFIG } from '../Content/ApiConstants';
 import DisplayForm from '../Components/DisplayForm';
-import { Validators } from '../utils/Validator';
+
+// TO DO, make each realm/character into a field set so that they must go hand in hand data wise
 
 const CharacterReputation = () => {
-  // const [values, setValues] = useState({});
   const characterForm = [
     {
       type: 'input',
-      fieldName: 'Character name',
-      id: 'characterName-1',
+      fieldGroupId: '1',
+      fieldId: 'characterName-1',
+      fieldName: 'characterName',
+      label: 'Character name',
     },
     {
       type: 'input',
-      fieldName: 'Realm (EU Only)',
-      id: 'realm-1',
+      fieldGroupId: '1',
+      fieldId: 'realm-1',
+      fieldName: 'realm',
+      label: 'Realm (EU Only)',
       defaultValue: 'Argent Dawn',
     },
   ];
@@ -24,8 +28,9 @@ const CharacterReputation = () => {
 
   const getCharacterRep = async ({ realm, characterName }) => {
     const lowercaseCharacterName = characterName.toLowerCase();
+    const lowercaseRealm = realm.replace(/\s+/g, '-').toLowerCase();
     try {
-      const repList = await axios.get(`${BLIZZ_API_URL}/profile/wow/character/${realm}/${lowercaseCharacterName}/reputations?${BLIZZ_CONFIG}`);
+      const repList = await axios.get(`${BLIZZ_API_URL}/profile/wow/character/${lowercaseRealm}/${lowercaseCharacterName}/reputations?${BLIZZ_CONFIG}`);
       const specificRep = repList.data.reputations.filter((reputation) => {
         return reputation.faction.name === 'Argent Crusade';
       });
@@ -41,14 +46,19 @@ const CharacterReputation = () => {
   };
 
   const mapCharacterReps = async (characterList) => {
-    const resultArray = await Promise.all(characterList.map(async (character) => getCharacterRep({ realm: character.realm, characterName: character.name })));
+    const resultArray = await Promise.all(characterList.map(async (character) => getCharacterRep({ realm: character.realm, characterName: character.characterName })));
     setCharacterReps(resultArray);
   };
 
+  const validateFormData = (data) => {
+    console.log('d', data)
+    
+  };
+
   const handleSubmit = (e, formData) => {
-    console.log('submit')
     e.preventDefault();
-    console.log(formData);
+    validateFormData(formData);
+    // mapCharacterReps([formData]);
   };
 
   return (
@@ -60,7 +70,7 @@ const CharacterReputation = () => {
         fields={characterForm}
         handleSubmit={handleSubmit}
       />
-      
+
       <hr />
       {characterReps && <h2>Reps for {requestedRep}</h2>}
       {characterReps && characterReps.map((character) => {

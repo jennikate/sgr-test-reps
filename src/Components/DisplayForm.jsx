@@ -15,15 +15,19 @@ const determineFieldType = ({ field, handleChange }) => {
 const DisplayForm = ({ autocomplete, fields, handleSubmit }) => {
   const [formData, setFormData] = useState({});
 
-  // set any default values into formData
+  // create formData structure, with any default values
   const addExistingValues = (fields) => {
+    let formFields = {};
+
     fields.map((field) => {
-      if (field.defaultValue) { setFormData({ ...formData, [field.fieldName]: field.defaultValue }); }
+      formFields = { ...formFields, id: field.fieldGroupId, [field.fieldName]: field.defaultValue };
     });
+    setFormData([formFields]);
   };
 
   const handleChange = (value) => {
-    setFormData({ ...formData, [value.name]: value.value });
+    console.log('v', value.id)
+    setFormData({ ...formData, id: value.fieldGroupId, [value.name]: value.value });
   };
 
   useEffect(() => {
@@ -36,7 +40,7 @@ const DisplayForm = ({ autocomplete, fields, handleSubmit }) => {
     <form autoComplete={autocomplete}>
       {fields && fields.map((field) => {
         return (
-          <div key={field.id}>
+          <div key={field.fieldId}>
             {determineFieldType({ field: field, handleChange: handleChange })}
           </div>
         );
@@ -45,7 +49,7 @@ const DisplayForm = ({ autocomplete, fields, handleSubmit }) => {
         label="Submit"
         styleClass="button-primary"
         type="submit"
-        onClick={(e) => handleSubmit(e, { formData })}
+        onClick={(e) => handleSubmit(e, formData)}
       />
     </form>
   );
@@ -55,8 +59,9 @@ DisplayForm.propTypes = {
   autocomplete: PropTypes.string,
   fields: PropTypes.arrayOf(
     PropTypes.shape({
+      fieldGroupId: PropTypes.string.isRequired,
+      fieldId: PropTypes.string.isRequired,
       fieldName: PropTypes.string.isRequired,
-      id: PropTypes.string.isRequired,
       type: PropTypes.string.isRequired,
     }),
   ),
