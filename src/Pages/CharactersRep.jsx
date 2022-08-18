@@ -38,6 +38,24 @@ const CharacterReputation = () => {
       defaultValue: 'Argent Dawn',
     },
   ];
+  const characterFormValidationRules = [
+    {
+      field: 'characterName',
+      type: 'required',
+      message: 'Enter at least one character name',
+    },
+    {
+      field: 'realm',
+      type: 'required',
+      message: 'Field is required',
+    },
+    {
+      field: 'realm',
+      type: 'minLength',
+      message: 'Must be at least 3 characters',
+      requirement: 3,
+    },
+  ];
   const requestedRep = 'Argent Crusade';
   const [characterReps, setCharacterReps] = useState();
 
@@ -69,7 +87,7 @@ const CharacterReputation = () => {
 
   const validateFormData = (data) => {
     // validate character and realm are required
-    // console.log(data)
+    console.log(data)
     
   };
 
@@ -77,10 +95,10 @@ const CharacterReputation = () => {
     e.preventDefault();
     // how to programatically create the below array so there can be infinite (or up to 10 at least) characters submitted
     const characterList = [
-      { realm: formData.realm_1.value, characterName: formData.characterName_1.value },
-      { realm: formData.realm_2.value, characterName: formData.characterName_2.value },
+      { realm: formData.realm_1?.value, characterName: formData.characterName_1?.value },
+      { realm: formData.realm_2?.value, characterName: formData.characterName_2?.value },
     ];
-    mapCharacterReps(characterList);
+    validateFormData(characterList);
   };
 
   return (
