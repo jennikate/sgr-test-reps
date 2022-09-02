@@ -58,7 +58,6 @@ const CharacterReputation = () => {
   ];
   const requestedRep = 'Argent Crusade';
   const [characterReps, setCharacterReps] = useState();
-  const [errors, setErrors] = useState([]);
 
   const getCharacterRep = async ({ realm, characterName }) => {
     const lowercaseCharacterName = characterName.toLowerCase();
@@ -87,38 +86,9 @@ const CharacterReputation = () => {
   };
 
   const validateFormData = (data) => {
-    // for each rule
-    const results = characterFormValidationRules.map((rule) => {
-      // get the formData value that matches that rules field
-      const value = data[rule.field];
-      // test if the value passes the validation rule
-      switch (rule.type) {
-        case 'required':
-          if (!value || value.trim() === '') {
-            return {
-              error: true,
-              message: rule.message,
-              field: rule.field,
-            };
-          }
-          break;
-        case 'minLength':
-          if (value && value.length < rule.requirement) {
-            return {
-              error: true,
-              message: rule.message,
-              field: rule.field,
-            };
-          }
-          break;
-        default:
-      }
-    });
-
-    const resultsWithErrors = results.filter((result) => result?.error ? result : null);
-    const errorsExist = resultsWithErrors.length > 0;
-    setErrors({ ...errors, ...resultsWithErrors });
-    return errorsExist;
+    // validate character and realm are required
+    console.log(data)
+    
   };
 
   const handleSubmit = (e, formData) => {
@@ -128,16 +98,7 @@ const CharacterReputation = () => {
       { realm: formData.realm_1?.value, characterName: formData.characterName_1?.value },
       { realm: formData.realm_2?.value, characterName: formData.characterName_2?.value },
     ];
-    const singleCharacter = { realm: formData.realm_1?.value, characterName: formData.characterName_1?.value };
-    
-    if(validateFormData(singleCharacter)) {
-      // validate returns true ie there are errors
-      console.log('display errors');
-      // if you click submit twice, the second time it will have dropped all the values from the fields
-      // so how do we store the values in the data until submit is finished
-    } else {
-      mapCharacterReps(characterList);
-    }
+    validateFormData(characterList);
   };
 
   return (
